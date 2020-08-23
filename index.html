@@ -1,0 +1,536 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Indices and tables &mdash; Modelling Elastic VTI wave propagtion using Devito Compatible with Devito v4.2.3 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home" alt="Documentation Home"> Modelling Elastic VTI wave propagtion using Devito
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">Indices and tables</a></li>
+</ul>
+</div>
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Modelling Elastic VTI wave propagtion using Devito</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Indices and tables</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <p>Modelling Elastic VTI wave propagtion using Devito: documentation</p>
+<hr class="docutils" />
+<span class="target" id="module-model_VTI"></span><dl class="py class">
+<dt id="model_VTI.ModelElasticVTI">
+<em class="property">class </em><code class="sig-prename descclassname">model_VTI.</code><code class="sig-name descname">ModelElasticVTI</code><span class="sig-paren">(</span><em class="sig-param">origin</em>, <em class="sig-param">spacing</em>, <em class="sig-param">shape</em>, <em class="sig-param">space_order</em>, <em class="sig-param">vp</em>, <em class="sig-param">vs</em>, <em class="sig-param">rho</em>, <em class="sig-param">epsilon</em>, <em class="sig-param">delta</em>, <em class="sig-param">gamma</em>, <em class="sig-param">theta=None</em>, <em class="sig-param">phi=None</em>, <em class="sig-param">nbl=20</em>, <em class="sig-param">fs=False</em>, <em class="sig-param">dtype=&lt;class 'numpy.float32'&gt;</em>, <em class="sig-param">subdomains=()</em>, <em class="sig-param">bcs='mask'</em>, <em class="sig-param">grid=None</em>, <em class="sig-param">**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#model_VTI.ModelElasticVTI" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>ModelElasticVTI</cite> provides a symbolic data objects for the
+creation of seismic wave propagation operators in VTI media.
+Essentially represents the physical model used for modelling VTI media.</p>
+<p>Thomsen’s stiffness coefficients in elastic VTI media from the stiffness matrix,
+otherwise known as the elastic modulus matrix.
+The coefficients are computed given by the following formulae:
+c11 = ro*(1+2*eps)*vp**2
+c33 = ro*vp**2
+c44 = ro*vs**2
+c66 = ro*(1+2*gamma)*vs**2
+f = 1 - vs**2/vp**2
+c13 = ro*vp**2*np.sqrt(f*(f+2*delta))-ro*vs**2
+- <a class="reference external" href="https://doi.org/10.1016/j.jappgeo.2019.103847">https://doi.org/10.1016/j.jappgeo.2019.103847</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>origin</strong> (<em>tuple of floats</em>) – Origin of the model in m as a tuple in (x,y,z) order.</p></li>
+<li><p><strong>spacing</strong> (<em>tuple of floats</em>) – Grid size in m as a Tuple in (x,y,z) order.</p></li>
+<li><p><strong>shape</strong> (<em>tuple of int</em>) – Number of grid points size in (x,y,z) order.</p></li>
+<li><p><strong>space_order</strong> (<em>int</em>) – Order of the spatial stencil discretisation.</p></li>
+<li><p><strong>vp</strong> (<em>float</em><em> or </em><em>array</em>) – P-wave velocity in km/s.</p></li>
+<li><p><strong>vs</strong> (<em>float</em><em> or </em><em>array</em>) – S-wave velocity in km/s.</p></li>
+<li><p><strong>rho</strong> (<em>float</em><em> or </em><em>array</em>) – Density in kg/cm^3 (rho=1 for water).</p></li>
+<li><p><strong>epsilon</strong> (<em>array_like</em><em> or </em><em>float</em>) – Thomsen epsilon parameter (0&lt;epsilon&lt;1).</p></li>
+<li><p><strong>delta</strong> (<em>array_like</em><em> or </em><em>float</em>) – Thomsen delta parameter (0&lt;delta&lt;1), delta&lt;epsilon.</p></li>
+<li><p><strong>gamma</strong> (<em>array_like</em><em> or </em><em>float</em>) – Thomsen gamma parameter</p></li>
+<li><p><strong>theta</strong> (<em>array_like</em><em> or </em><em>float</em>) – Tilt angle in radian.</p></li>
+<li><p><strong>phi</strong> (<em>array_like</em><em> or </em><em>float</em>) – Asymuth angle in radian.</p></li>
+<li><p><strong>nbl</strong> (<em>int</em><em>,</em>) – The number of absorbing layers for boundary damping.</p></li>
+<li><p><strong>dtype</strong> (<em>np.float32</em><em> or </em><em>np.float64</em>) – Defaults to 32.</p></li>
+<li><p><strong>damp</strong> (<em>Function</em>) – The damping field for absorbing boundary conditions.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="model_VTI.ModelElasticVTI.critical_dt">
+<em class="property">property </em><code class="sig-name descname">critical_dt</code><a class="headerlink" href="#model_VTI.ModelElasticVTI.critical_dt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Critical computational time step value from the CFL condition.
+For a fixed temporal order this number decreases as spatial order increases.
+The CFL condtion is then given by
+dt &lt;= cfl_coeff * h / (epsilon_scale * max(vp))</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="model_VTI.ModelElasticVTI.vp">
+<em class="property">property </em><code class="sig-name descname">vp</code><a class="headerlink" href="#model_VTI.ModelElasticVTI.vp" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>numpy.ndarray</cite> holding the P-wave velocity in km/s.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt id="model_VTI.ModelElasticVTI.vs">
+<em class="property">property </em><code class="sig-name descname">vs</code><a class="headerlink" href="#model_VTI.ModelElasticVTI.vs" title="Permalink to this definition">¶</a></dt>
+<dd><p><cite>numpy.ndarray</cite> holding the S-wave velocity in km/s.</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-elastic_VTI_solvers.wavesolver"></span><dl class="py class">
+<dt id="elastic_VTI_solvers.wavesolver.ElasticVTIWaveSolver">
+<em class="property">class </em><code class="sig-prename descclassname">elastic_VTI_solvers.wavesolver.</code><code class="sig-name descname">ElasticVTIWaveSolver</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">geometry</span></em>, <em class="sig-param"><span class="n">space_order</span><span class="o">=</span><span class="default_value">4</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#elastic_VTI_solvers.wavesolver.ElasticVTIWaveSolver" title="Permalink to this definition">¶</a></dt>
+<dd><p>Solver object that provides operators for Forward modelling elastic wave propogation
+in VTI media. The setup of this wavesolver inherits the structure to ElasticWaveSolver,
+but removes the need to instantiate lamé parameters
+ElasticWaveSolver is present within the devito repository:
+<a class="reference external" href="https://github.com/devitocodes/devito/blob/master/examples/seismic/elastic/wavesolver.py">https://github.com/devitocodes/devito/blob/master/examples/seismic/elastic/wavesolver.py</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>Model</em>) – Physical model with domain parameters.</p></li>
+<li><p><strong>geometry</strong> (<em>AcquisitionGeometry</em>) – Devito Geometry object that contains the source (SparseTimeFunction) and
+receivers (SparseTimeFunction) and their position.</p></li>
+<li><p><strong>space_order</strong> (<em>int</em><em>, </em><em>optional</em>) – Order of spatial stencil discretisation. Defaults to 4.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt id="elastic_VTI_solvers.wavesolver.ElasticVTIWaveSolver.forward">
+<code class="sig-name descname">forward</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">src</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">rec1</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">rec2</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">c11</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">c33</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">c44</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">c66</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">c13</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">irho</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">v</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">tau</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">save</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#elastic_VTI_solvers.wavesolver.ElasticVTIWaveSolver.forward" title="Permalink to this definition">¶</a></dt>
+<dd><p>Forward modelling function that creates the necessary
+data objects for running a forward modelling operator.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>src</strong> (<em>SparseTimeFunction</em><em> or </em><em>array_like</em><em>, </em><em>optional</em>) – Time series data for the injected source term.</p></li>
+<li><p><strong>rec1</strong> (<em>SparseTimeFunction</em><em> or </em><em>array_like</em><em>, </em><em>optional</em>) – The interpolated receiver data of the pressure (tzz).</p></li>
+<li><p><strong>rec2</strong> (<em>SparseTimeFunction</em><em> or </em><em>array_like</em><em>, </em><em>optional</em>) – The interpolated receiver data of the particle velocities (vxx).</p></li>
+<li><p><strong>v</strong> (<em>VectorTimeFunction</em><em>, </em><em>optional</em>) – The computed particle velocity.</p></li>
+<li><p><strong>tau</strong> (<em>TensorTimeFunction</em><em>, </em><em>optional</em>) – The computed symmetric stress tensor.</p></li>
+<li><p><strong>save</strong> (<em>int</em><em> or </em><em>Buffer</em><em>, </em><em>optional</em>) – Option to store the entire (unrolled) wavefield.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p><em>Rec1(txx), Rec2(vxx), particle velocities v, stress tensor tau and</em></p></li>
+<li><p><em>performance summary.</em></p></li>
+</ul>
+</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt id="elastic_VTI_solvers.wavesolver.ElasticVTIWaveSolver.op_fwd">
+<code class="sig-name descname">op_fwd</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">save</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#elastic_VTI_solvers.wavesolver.ElasticVTIWaveSolver.op_fwd" title="Permalink to this definition">¶</a></dt>
+<dd><p>Runs cached forward operator defined in operators.py</p>
+</dd></dl>
+
+</dd></dl>
+
+<span class="target" id="module-elastic_VTI_solvers.operators"></span><dl class="py function">
+<dt id="elastic_VTI_solvers.operators.ForwardOperator">
+<code class="sig-prename descclassname">elastic_VTI_solvers.operators.</code><code class="sig-name descname">ForwardOperator</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">geometry</span></em>, <em class="sig-param"><span class="n">space_order</span></em>, <em class="sig-param"><span class="n">save</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#elastic_VTI_solvers.operators.ForwardOperator" title="Permalink to this definition">¶</a></dt>
+<dd><p>Construct method for the forward modelling operator in elastic VTI media.
+This function acts a wrapper for the forward elastic VTI FD stencil</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>Model</em>) – Object containing the physical parameters.</p></li>
+<li><p><strong>geometry</strong> (<em>AcquisitionGeometry</em>) – Devito Geometry object that contains the source (SparseTimeFunction) and
+receivers (SparseTimeFunction) and their position.</p></li>
+<li><p><strong>space_order</strong> (<em>int</em><em>, </em><em>optional</em>) – Space discretization order.</p></li>
+<li><p><strong>save</strong> (<em>int</em><em> or </em><em>Buffer</em>) – Saving flag, True saves all time steps, False saves three buffered
+indices (last three time steps). Defaults to False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>The created foward operater</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="elastic_VTI_solvers.operators.src_rec">
+<code class="sig-prename descclassname">elastic_VTI_solvers.operators.</code><code class="sig-name descname">src_rec</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">v</span></em>, <em class="sig-param"><span class="n">tau</span></em>, <em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">geometry</span></em><span class="sig-paren">)</span><a class="headerlink" href="#elastic_VTI_solvers.operators.src_rec" title="Permalink to this definition">¶</a></dt>
+<dd><p>Source injection and receiver interpolation
+Similar function used to setup Source and Reciever geometries for
+Elastic Iso solver: <a class="reference external" href="https://github.com/devitocodes/devito/blob/master/examples/seismic/elastic/operators.py">https://github.com/devitocodes/devito/blob/master/examples/seismic/elastic/operators.py</a>
+The difference here recievers are set to sample the wavefields vx and tauxx.
+Tauxx reciever data is interpolated at the nodes and should be used for testing convergence in space</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v</strong> (<em>VectorTimeFunction</em>) – Velocity field.</p></li>
+<li><p><strong>tau</strong> (<em>TensorTimeFunction</em>) – Pressure field.</p></li>
+<li><p><strong>model</strong> (<em>Model</em>) – Object containing the physical parameters.</p></li>
+<li><p><strong>geometry</strong> (<em>AcquisitionGeometry</em>) – Devito Geometry object that contains the source (SparseTimeFunction) and
+receivers (SparseTimeFunction) and their position.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Source and Reciever terms as symbolic objects</p>
+</dd>
+</dl>
+</dd></dl>
+
+<span class="target" id="module-functions"></span><dl class="py function">
+<dt id="functions.inst_grid">
+<code class="sig-prename descclassname">functions.</code><code class="sig-name descname">inst_grid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">num</span></em>, <em class="sig-param"><span class="n">space</span></em>, <em class="sig-param"><span class="n">dim</span><span class="o">=</span><span class="default_value">3</span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.inst_grid" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function to quickly define an equally spaced grid.
+Output from this function can be directly passed into ModelElasticVTI
+to automate the process of spanning a computational domain</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>num</strong> (<em>int</em><em> or </em><em>float</em>) – Number of grid points.</p></li>
+<li><p><strong>space</strong> (<em>tuple of floats</em><em>, </em><em>optional</em>) – Spacing of the Grid in m.</p></li>
+<li><p><strong>dim</strong> (<em>int</em>) – Number of grid points size in (x,y,z) order.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Tuples for grid shape, spacing, origin and extent</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="functions.plot_fields">
+<code class="sig-prename descclassname">functions.</code><code class="sig-name descname">plot_fields</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">origin</span></em>, <em class="sig-param"><span class="n">v</span></em>, <em class="sig-param"><span class="n">tau</span></em>, <em class="sig-param"><span class="n">vmin</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">vmax</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">colorbar</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">cmap</span><span class="o">=</span><span class="default_value">'seismic'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.plot_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot Velocity and Pressure data, without background model data.
+Useful when reproducing results from published literature.
+The function is used to visualize velocity and pressure XZ or XY slices.
+Works for both 2D and 3D models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>Model</em>) – Object that holds the velocity model.</p></li>
+<li><p><strong>origin</strong> (<em>int</em><em> or </em><em>float</em>) – Top left corner of input model.</p></li>
+<li><p><strong>v</strong> (<em>VectorTimeFunction</em>) – Velocity field.</p></li>
+<li><p><strong>tau</strong> (<em>TensorTimeFunction</em>) – Pressure field.</p></li>
+<li><p><strong>vmax</strong> (<em>int</em><em> or </em><em>float</em>) – Max value to plot. Defaults max value + 10%</p></li>
+<li><p><strong>vmin</strong> (<em>int</em><em> or </em><em>float</em>) – Min value to plot. Defaults min value - 10%</p></li>
+<li><p><strong>cmap</strong> (<em>str</em>) – Choice of colormap. Defaults to seismic</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="functions.plot_model">
+<code class="sig-prename descclassname">functions.</code><code class="sig-name descname">plot_model</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">origin</span></em>, <em class="sig-param"><span class="n">rec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">src</span><span class="o">=</span><span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.plot_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function for plotting a single wavefield.
+The function plots the model object’s P-wave and S-wave velocity profile
+and Density profile. The absorbing boundary layer can also be visualised.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>Model</em>) – Object that holds velocity + density models.</p></li>
+<li><p><strong>origin</strong> (<em>Tuple</em>) – Top left corner of input model.</p></li>
+<li><p><strong>rec</strong> – Receiver used in problem.</p></li>
+<li><p><strong>src</strong> – Seismic source used in problem.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="functions.plot_model_v_tau">
+<code class="sig-prename descclassname">functions.</code><code class="sig-name descname">plot_model_v_tau</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">origin</span></em>, <em class="sig-param"><span class="n">v</span></em>, <em class="sig-param"><span class="n">tau</span></em>, <em class="sig-param"><span class="n">rec</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">src</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">cmap</span><span class="o">=</span><span class="default_value">'seismic'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.plot_model_v_tau" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function for plotting multiple XZ/XY wavefield
+slices superimposed on the model object. The function is used to visualize velocity and pressure XZ/XY slices
+along with velocity model. The absorbing boundary layer can also be visualised.
+2D and 3D model objects can be input.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>Model</em>) – Object that holds the velocity model.</p></li>
+<li><p><strong>origin</strong> (<em>int</em><em> or </em><em>float</em>) – Top left corner of input model.</p></li>
+<li><p><strong>v</strong> (<em>VectorTimeFunction</em>) – Velocity field.</p></li>
+<li><p><strong>tau</strong> (<em>TensorTimeFunction</em>) – Pressure field.</p></li>
+<li><p><strong>rec</strong> – Receiver used in problem.</p></li>
+<li><p><strong>src</strong> – Seismic source used in problem.</p></li>
+<li><p><strong>cmap</strong> (<em>str</em>) – Choice of colormap. Defaults to seismic</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="functions.plot_shot_record">
+<code class="sig-prename descclassname">functions.</code><code class="sig-name descname">plot_shot_record</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">rec1</span></em>, <em class="sig-param"><span class="n">rec2</span></em>, <em class="sig-param"><span class="n">rec3</span></em>, <em class="sig-param"><span class="n">rec4</span></em>, <em class="sig-param"><span class="n">t0</span></em>, <em class="sig-param"><span class="n">tn</span></em>, <em class="sig-param"><span class="n">ext</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.plot_shot_record" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function for plotting wavefield shot records.
+The function is used to visualize four different shot records for
+the first and last components of stress and velocity fields</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rec1</strong> – vx receiver data with shape (time, points).</p></li>
+<li><p><strong>rec2</strong> – vy or vz receiver data with shape (time, points).</p></li>
+<li><p><strong>rec3</strong> – Tauxx receiver data with shape (time, points).</p></li>
+<li><p><strong>rec4</strong> – Tauyy or Tauzz receiver data with shape (time, points).</p></li>
+<li><p><strong>t0</strong> (<em>int</em>) – Start of time dimension to plot.</p></li>
+<li><p><strong>tn</strong> (<em>int</em>) – End of time dimension to plot.</p></li>
+<li><p><strong>ext</strong> (<em>tuple</em>) – Extent of grid</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="functions.plot_wavefield_XZslice">
+<code class="sig-prename descclassname">functions.</code><code class="sig-name descname">plot_wavefield_XZslice</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">model</span></em>, <em class="sig-param"><span class="n">v</span></em>, <em class="sig-param"><span class="n">src_coordinates</span></em>, <em class="sig-param"><span class="n">rec_coordinates</span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.plot_wavefield_XZslice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function for plotting a single wavefield.
+The function is use to visualize wavefield + model + ABCs.
+Ideal usage during convergence analysis of solver</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>model</strong> (<em>Model</em>) – Object that holds the velocity model.</p></li>
+<li><p><strong>v</strong> (<em>VectorTimeFunction</em>) – vy or vz receiver data with shape (time, points).</p></li>
+<li><p><strong>src_coordinates</strong> (<em>ndarray</em>) – 2D or 3D source coordinates [x,y] or [x,y,z]</p></li>
+<li><p><strong>rec_coordinates</strong> (<em>ndarray</em>) – 2D or 3D coordinates for single reciever [x,y] or [x,y,z]</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="functions.reset_fields">
+<code class="sig-prename descclassname">functions.</code><code class="sig-name descname">reset_fields</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">v</span></em>, <em class="sig-param"><span class="n">tau</span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.reset_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function to reset Velocity and pressure fields after each operator run.
+The function is useful to use when testing multiple codeblocks when not using a utility stencil.
+It should be placed after norms are checked.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v</strong> (<em>int</em><em> or </em><em>float</em>) – VectorTimeFunction.</p></li>
+<li><p><strong>tau</strong> (<em>tuple of floats</em>) – TensorTimeFunction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>Velocity and Pressure fields</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="functions.symm_check">
+<code class="sig-prename descclassname">functions.</code><code class="sig-name descname">symm_check</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">v</span></em>, <em class="sig-param"><span class="n">tau</span></em><span class="sig-paren">)</span><a class="headerlink" href="#functions.symm_check" title="Permalink to this definition">¶</a></dt>
+<dd><p>Utility function for unit testing output wavefield
+post forward propagation. The test checks to ensure symmetry within the problem exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>v</strong> (<em>VectorTimeFunction</em>) – Velocity field.</p></li>
+<li><p><strong>tau</strong> (<em>TensorTimeFunction</em>) – Pressure field.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="toctree-wrapper compound">
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Chirayu Khimji, Devito Project Team
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,25 @@
+Modelling Elastic VTI wave propagtion using Devito: documentation
+
+==============================================================================
+
+.. automodule:: model_VTI
+    :members:
+.. automodule:: elastic_VTI_solvers.wavesolver
+    :members: 
+.. automodule:: elastic_VTI_solvers.operators
+    :members: 
+.. automodule:: functions
+    :members:
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contents:
+
+
+
+Indices and tables
+==================
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
